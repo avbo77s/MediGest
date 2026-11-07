@@ -1,7 +1,3 @@
-# ============================================================
-# Cette partie est faite par Abderrahmane (GUI)
-# ============================================================
-
 import html
 import json
 import os
