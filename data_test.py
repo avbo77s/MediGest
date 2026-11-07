@@ -95,7 +95,7 @@ def charger(db):
 
     ids = {}
     for login, cin, nom, prenom, naissance, sexe, tel, allergies in PATIENTS:
-        ids[login] = utilisateurs._creer_patient(
+        ids[login] = utilisateurs.ajouter_patient(
             login, "patient123", cin, nom, prenom, login.replace(".", "") + "@example.ma",
             tel, "Casablanca", naissance, sexe, allergies)
 

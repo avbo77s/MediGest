@@ -1,21 +1,21 @@
 
+# Classes d'accès aux données (DAO) pour communiquer avec la base SQLite
 import sqlite3
 
 from security import hash_password, verifier_mot_de_passe
 
 
-# =====================================================
-# 1. UTILISATEUR DAO
-# =====================================================
+
+# 1. UTILISATEUR DAO /////////////////////
+
 
 class UtilisateurDAO:
 
     def __init__(self, db):
         self.db = db
 
-    # ---------------------------------
     # Chercher un utilisateur par login
-    # ---------------------------------
+    
 
     def chercher_par_login(self, login):
 
@@ -29,9 +29,9 @@ class UtilisateurDAO:
 
         return curseur.fetchone()
 
-    # ---------------------------------
+  
     # Chercher un utilisateur par ID
-    # ---------------------------------
+   
 
     def chercher_par_id(self, id_user):
 
@@ -45,9 +45,9 @@ class UtilisateurDAO:
 
         return curseur.fetchone()
 
-    # ---------------------------------
+   
     # Ajouter un patient
-    # ---------------------------------
+    
 
     def ajouter_patient(
         self, login, mot_de_passe, cin, nom, prenom,
@@ -81,9 +81,9 @@ class UtilisateurDAO:
             self.db.rollback()
             raise ValueError(f"Erreur lors de l'inscription : {erreur}")
 
-    # ---------------------------------
+   
     # Ajouter un médecin
-    # ---------------------------------
+   
 
     def ajouter_medecin(
         self, login, mot_de_passe, cin, nom, prenom,
@@ -115,9 +115,9 @@ class UtilisateurDAO:
             self.db.rollback()
             raise ValueError(f"Erreur lors de l'ajout du médecin : {erreur}")
 
-    # ---------------------------------
+   
     # Authentification
-    # ---------------------------------
+   
 
     def authentifier(self, login, mot_de_passe):
 
@@ -137,9 +137,9 @@ class UtilisateurDAO:
 
         return None
 
-    # ---------------------------------
+   
     # Afficher tous les patients
-    # ---------------------------------
+   
 
     def afficher_patients(self):
 
@@ -153,9 +153,9 @@ class UtilisateurDAO:
 
         return curseur.fetchall()
 
-    # ---------------------------------
+   
     # Afficher tous les médecins
-    # ---------------------------------
+   
 
     def afficher_medecins(self):
 
@@ -169,9 +169,9 @@ class UtilisateurDAO:
 
         return curseur.fetchall()
 
-    # ---------------------------------
+   
     # Modifier les informations utilisateur
-    # ---------------------------------
+   
 
     def modifier_utilisateur(self, id_user, **donnees):
 
@@ -214,9 +214,9 @@ class UtilisateurDAO:
             self.db.rollback()
             raise ValueError(f"Modification impossible : {erreur}")
 
-    # ---------------------------------
+   
     # Désactiver un compte
-    # ---------------------------------
+   
 
     def desactiver_utilisateur(self, id_user):
 
@@ -232,9 +232,9 @@ class UtilisateurDAO:
         self.db.commit()
         return curseur.rowcount > 0
 
-    # ---------------------------------
+   
     # Réactiver un compte
-    # ---------------------------------
+   
 
     def reactiver_utilisateur(self, id_user):
 
@@ -250,9 +250,9 @@ class UtilisateurDAO:
         self.db.commit()
         return curseur.rowcount > 0
 
-    # ---------------------------------
+   
     # Supprimer un utilisateur
-    # ---------------------------------
+   
 
     def supprimer_utilisateur(self, id_user):
 
@@ -275,9 +275,9 @@ class UtilisateurDAO:
                 "il possède des rendez-vous associés."
             )
 
-    # ---------------------------------
+   
     # Changer le mot de passe
-    # ---------------------------------
+   
 
     def changer_mot_de_passe(
         self, id_user, ancien_mot_de_passe, nouveau_mot_de_passe
@@ -318,9 +318,9 @@ class RendezVousDAO:
     def __init__(self, db):
         self.db = db
 
-    # ---------------------------------
+   
     # Ajouter un rendez-vous
-    # ---------------------------------
+   
 
     def ajouter_rdv(
         self, id_patient, id_medecin,
@@ -346,9 +346,9 @@ class RendezVousDAO:
             self.db.rollback()
             raise ValueError(f"Impossible de créer le rendez-vous : {erreur}")
 
-    # ---------------------------------
+   
     # Chercher un rendez-vous par ID
-    # ---------------------------------
+   
 
     def chercher_par_id(self, id_rendezvous):
 
@@ -362,9 +362,9 @@ class RendezVousDAO:
 
         return curseur.fetchone()
 
-    # ---------------------------------
+   
     # Afficher tous les rendez-vous
-    # ---------------------------------
+   
 
     def afficher_tous(self):
 
@@ -385,9 +385,9 @@ class RendezVousDAO:
 
         return curseur.fetchall()
 
-    # ---------------------------------
+   
     # Rendez-vous d'un patient
-    # ---------------------------------
+   
 
     def afficher_par_patient(self, id_patient):
 
@@ -407,9 +407,9 @@ class RendezVousDAO:
 
         return curseur.fetchall()
 
-    # ---------------------------------
+   
     # Rendez-vous d'un médecin
-    # ---------------------------------
+   
 
     def afficher_par_medecin(self, id_medecin):
 
@@ -429,9 +429,9 @@ class RendezVousDAO:
 
         return curseur.fetchall()
 
-    # ---------------------------------
+   
     # Modifier le statut
-    # ---------------------------------
+   
 
     def modifier_statut(self, id_rendezvous, nouveau_statut):
 
@@ -454,9 +454,9 @@ class RendezVousDAO:
         self.db.commit()
         return curseur.rowcount > 0
 
-    # ---------------------------------
+   
     # Annuler un rendez-vous
-    # ---------------------------------
+   
 
     def annuler_rdv(self, id_rendezvous):
 
@@ -464,9 +464,9 @@ class RendezVousDAO:
             id_rendezvous, "ANNULE"
         )
 
-    # ---------------------------------
+   
     # Enregistrer une consultation
-    # ---------------------------------
+   
 
     def enregistrer_consultation(
         self, id_rendezvous, diagnostic,
@@ -493,9 +493,9 @@ class RendezVousDAO:
         self.db.commit()
         return curseur.rowcount > 0
 
-    # ---------------------------------
+   
     # Enregistrer un paiement
-    # ---------------------------------
+   
 
     def enregistrer_paiement(
         self, id_rendezvous, mode_paiement, date_paiement
@@ -529,9 +529,9 @@ class MedicamentDAO:
     def __init__(self, db):
         self.db = db
 
-    # ---------------------------------
+   
     # Ajouter un médicament
-    # ---------------------------------
+   
 
     def ajouter_medicament(
         self, designation, famille_med,
@@ -560,9 +560,9 @@ class MedicamentDAO:
             self.db.rollback()
             raise ValueError(f"Erreur médicament : {erreur}")
 
-    # ---------------------------------
+   
     # Afficher tous les médicaments
-    # ---------------------------------
+   
 
     def afficher_medicaments(self):
 
@@ -575,9 +575,9 @@ class MedicamentDAO:
 
         return curseur.fetchall()
 
-    # ---------------------------------
+   
     # Chercher un médicament par ID
-    # ---------------------------------
+   
 
     def chercher_par_id(self, id_med):
 
@@ -591,9 +591,9 @@ class MedicamentDAO:
 
         return curseur.fetchone()
 
-    # ---------------------------------
+   
     # Modifier un médicament
-    # ---------------------------------
+   
 
     def modifier_medicament(
         self, id_med, designation, famille_med,
@@ -624,9 +624,9 @@ class MedicamentDAO:
             self.db.rollback()
             raise ValueError(f"Modification impossible : {erreur}")
 
-    # ---------------------------------
+   
     # Supprimer un médicament
-    # ---------------------------------
+   
 
     def supprimer_medicament(self, id_med):
 
@@ -641,9 +641,9 @@ class MedicamentDAO:
         self.db.commit()
         return curseur.rowcount > 0
 
-    # ---------------------------------
+   
     # Modifier la quantité en stock
-    # ---------------------------------
+   
 
     def modifier_stock(self, id_med, nouvelle_quantite):
 
@@ -662,9 +662,9 @@ class MedicamentDAO:
         self.db.commit()
         return curseur.rowcount > 0
 
-    # ---------------------------------
+   
     # Vérifier la disponibilité
-    # ---------------------------------
+   
 
     def verifier_stock(self, id_med, quantite):
 
@@ -675,9 +675,9 @@ class MedicamentDAO:
 
         return medicament["stock"] >= quantite
 
-    # ---------------------------------
+   
     # Médicaments en alerte
-    # ---------------------------------
+   
 
     def medicaments_en_alerte(self):
 
@@ -701,9 +701,9 @@ class StatistiquesDAO:
     def __init__(self, db):
         self.db = db
 
-    # ---------------------------------
+   
     # Nombre de patients
-    # ---------------------------------
+   
 
     def nombre_patients(self):
 
@@ -717,9 +717,9 @@ class StatistiquesDAO:
 
         return curseur.fetchone()[0]
 
-    # ---------------------------------
+   
     # Nombre de médecins
-    # ---------------------------------
+   
 
     def nombre_medecins(self):
 
@@ -733,9 +733,9 @@ class StatistiquesDAO:
 
         return curseur.fetchone()[0]
 
-    # ---------------------------------
+   
     # Nombre de rendez-vous
-    # ---------------------------------
+   
 
     def nombre_rdv(self):
 
@@ -747,9 +747,9 @@ class StatistiquesDAO:
 
         return curseur.fetchone()[0]
 
-    # ---------------------------------
+   
     # Rendez-vous aujourd'hui
-    # ---------------------------------
+   
 
     def rdv_aujourdhui(self):
 
@@ -762,9 +762,9 @@ class StatistiquesDAO:
 
         return curseur.fetchone()[0]
 
-    # ---------------------------------
+   
     # Chiffre d'affaires
-    # ---------------------------------
+   
 
     def chiffre_affaires(self):
 
@@ -778,9 +778,9 @@ class StatistiquesDAO:
 
         return curseur.fetchone()[0]
 
-    # ---------------------------------
+   
     # Nombre de médicaments en alerte
-    # ---------------------------------
+   
 
     def stock_en_alerte(self):
 
@@ -793,9 +793,9 @@ class StatistiquesDAO:
 
         return curseur.fetchone()[0]
 
-    # ---------------------------------
+   
     # Résumé du tableau de bord
-    # ---------------------------------
+   
 
     def resume_accueil(self, utilisateur=None):
 

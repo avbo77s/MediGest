@@ -1,4 +1,5 @@
 
+# Fonctions pour exporter les factures en CSV et ouvrir les documents HTML
 import csv
 import tempfile
 import webbrowser
@@ -7,25 +8,17 @@ from datetime import datetime
 
 
 def exporter_csv(lignes):
-    """Exporte une liste de lignes dans un fichier CSV."""
-
+    # Exporte la liste des lignes dans un fichier CSV avec séparateur point-virgule pour Excel
     if not lignes:
         raise ValueError("Aucune donnée à exporter.")
 
-    # Récupérer les noms des colonnes
     colonnes = lignes[0].keys()
-
-    # Créer un nom de fichier avec la date et l'heure
     nom_fichier = "export_" + datetime.now().strftime("%Y%m%d_%H%M%S") + ".csv"
-
     chemin = Path.cwd() / nom_fichier
 
-    # Écrire les données dans le fichier CSV
     with open(chemin, "w", newline="", encoding="utf-8-sig") as fichier:
         writer = csv.writer(fichier, delimiter=";")
-
         writer.writerow(colonnes)
-
         for ligne in lignes:
             writer.writerow([ligne[colonne] for colonne in colonnes])
 
@@ -33,8 +26,7 @@ def exporter_csv(lignes):
 
 
 def ouvrir_dans_navigateur(contenu_html):
-    """Crée un fichier HTML temporaire et l'ouvre dans le navigateur."""
-
+    # Crée un fichier temporaire HTML et l'ouvre directement dans le navigateur pour impression
     with tempfile.NamedTemporaryFile(
         mode="w",
         suffix=".html",
@@ -45,5 +37,4 @@ def ouvrir_dans_navigateur(contenu_html):
         chemin = fichier.name
 
     webbrowser.open(Path(chemin).as_uri())
-
     return chemin

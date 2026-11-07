@@ -1,9 +1,10 @@
 
+# Gestion de la connexion et création de la base de données SQLite
 import sqlite3
 
 
 def creer_base():
-
+    # Crée les tables si elles n'existent pas encore
     db = sqlite3.connect("MediGest.db")
     db.execute("PRAGMA foreign_keys = ON")
 
@@ -84,21 +85,19 @@ def creer_base():
 
 
 def get_connection():
-
+    # Ouvre une connexion SQLite avec Row factory pour accéder aux colonnes par leur nom
     db = sqlite3.connect("MediGest.db")
-
     db.row_factory = sqlite3.Row
-
     db.execute("PRAGMA foreign_keys = ON")
-
     return db
-def base_vide(db):
-    resultat = db.execute(
-        "SELECT COUNT(*) FROM Users"
-    ).fetchone()
 
+
+def base_vide(db):
+    # Vérifie si la table Users est vide pour charger les données de départ
+    resultat = db.execute("SELECT COUNT(*) FROM Users").fetchone()
     return resultat[0] == 0
 
+
 if __name__ == "__main__":
-    # creation de base de donnne
+    # Test de création de la base
     creer_base()

@@ -1,0 +1,5 @@
+# MediGest
+# Ce projet utilise exclusivement la bibliothèque standard de Python 3.
+# Aucun paquet tiers (PyPI) n'est nécessaire.
+
+

@@ -1,6 +1,7 @@
-from database import creer_base, get_connection
+from database import creer_base, get_connection, base_vide
 from dao import UtilisateurDAO
 from gui import Application
+import data_test
 
 
 def creer_medecins_test(db):
@@ -43,6 +44,25 @@ def creer_medecins_test(db):
 
         print("Dr Bennani ajouté !")
 
+    # Patient test : Sara Tazi (pour tester le profil patient)
+    if utilisateurs.chercher_par_login("s.tazi") is None:
+
+        utilisateurs.ajouter_patient(
+            "s.tazi",
+            "patient123",
+            "AB123456",
+            "Tazi",
+            "Sara",
+            "s.tazi@alamal.ma",
+            "0612345678",
+            "Clinique Al Amal, Casablanca",
+            "1992-03-14",
+            "F",
+            None
+        )
+
+        print("Patiente Sara Tazi ajoutée !")
+
 
 def main():
 
@@ -51,8 +71,12 @@ def main():
     db = get_connection()
 
     try:
-        # Ajouter les médecins sans toucher aux autres données
-        creer_medecins_test(db)
+        # Initialisation automatique si la base est vide
+        if base_vide(db):
+            print("Initialisation des données cliniques de la clinique Al Amal...")
+            data_test.charger(db)
+        else:
+            creer_medecins_test(db)
 
         # Lancer l'application
         app = Application(db)
